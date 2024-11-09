@@ -26,17 +26,46 @@ short_form має повертати ['Mon', ..., 'Sun'].
 Декоратори та головні виклики мають бути в різних модулях!
 Бажано передбачити ствоерення та використання віртуального оточення.
 
+Package Version
+------- -------
+pip 24.3.1
+
 """
 
-
-import calendar
 import locale
+import calendar
 from functools import wraps
 
-#@translate("de_DE.utf8")
-# @short_form
+
+def short_form(func):
+    @wraps(func)
+    def wrapper():
+        return list(calendar.day_abbr)
+
+    return wrapper
+
+
+def translate(locale_name):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            # Зберегаємо поточну локаль
+            current_locale = locale.getlocale(locale.LC_TIME)
+            try:
+                # Встановлюємо потрібну локаль
+                locale.setlocale(locale.LC_TIME, locale_name)
+                result = func(*args, **kwargs)
+            finally:
+                # Встановлюємо локаль що була раніше
+                locale.setlocale(locale.LC_TIME, current_locale)
+            return result
+
+        return wrapper
+
+    return decorator
+
+
+@translate("de_DE.utf8")
+@short_form
 def get_data():
     return list(calendar.day_name)
-
-
-

@@ -11,10 +11,10 @@ pip 24.3.1
 
 from multilang_calendar import get_data
 
+
 def main() -> None:
     # ------------------------  Демо календар ----------------------------
     print(get_data())
-
 
 
 # --------------------------------- main module ----------------------------------------------
@@ -24,6 +24,6 @@ if __name__ == '__main__':
 ''' 
 РЕЗУЛЬТАТ
 
-['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']
 
 '''
